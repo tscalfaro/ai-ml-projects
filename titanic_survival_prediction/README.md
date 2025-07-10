@@ -1,5 +1,61 @@
-Created first ML pipeline: gathered and cleaned data, utilized logistic regression model first and achieved ~ 81% accuracy.
+# Titanic Survival Prediction
 
-Updated: Added a random forest model to compare to the linear regression model. Initial hypothesis was the rf model may be more
-         accuarte when compared to the logistic regression model. However, this was not the case, it was, in fact, slightly less
-         accurate at ~ 79%. This may be due to data set size (being too low) or signals.
+A beginner machine learning project to explore survival prediction on the Titanic dataset using logistic regression and random forest models.
+
+# Overview
+
+This project walks through the full supervised learning pipeline:
+
+    - Data loading and exploration
+    - Data cleaning and preprocessing
+    - Feature encoding and transformation
+    - Model training (Logistic Regression and Random Forest)
+    - Model evaluation and comparison
+
+# Models and Results
+
+## Logistic Regression
+    - Accuracy: ~81%
+    - Stregnths: Performed well despite dataset simplicity and linear separability
+
+## Random Foreest Classifier
+    - Accuracy: ~79%
+    - Initial hypothesis was that the random forest model, being non-linear, would outperform logistic regression.
+      However, it underperformed slightly.
+    - Possible reasons include:
+        - Small dataset size limiting tree diversity
+        - Model overfitting or default hyperparameters
+
+## Data Source and Preproccessing
+
+Dataset: [Titanic - Machine Learning from Disaster (Kaggle)] (https://www.kaggle.com/competitions/titanic/data)
+
+Key preprocessing steps:
+    - Removed columns with high missingness ('Cabin')
+    - Imputed missing values in 'Age' and 'Embarked'
+    - Encoded categorical variables:
+        - 'Sex' mapped to binary
+        - 'Embarked' one-hot encoded
+    - Dropped identifiers ('Name', 'Ticket', 'PassengerId')
+
+## Project Structure
+
+    titanic_survival_prediction
+    |--data
+        |--train.csv
+    |--notebooks
+        |--Titanic_Survival_Prediction.ipynb
+    |--requirements.txt
+    |--README.md
+
+## Tech Stack
+
+    - Python 3.8+
+    - pandas, numpy
+    - seaborn, matplotlib
+    - scikit-learn
+    - Jypyter Notebook / VS Code
+
+## Author
+
+Antonio Scalfaro
