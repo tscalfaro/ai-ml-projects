@@ -1,0 +1,1 @@
+Created first ML pipeline: gathered and cleaned data, utilized logistic regression model first and achieved ~ 80% accuracy
