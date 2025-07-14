@@ -14,17 +14,31 @@ This project walks through the full supervised learning pipeline:
 
 # Models and Results
 
-## Logistic Regression
+## Logistic Regression (Baseline)
     - Accuracy: ~81%
     - Stregnths: Performed well despite dataset simplicity and linear separability
 
-## Random Foreest Classifier
+## Random Foreest Classifier (Default)
     - Accuracy: ~79%
     - Initial hypothesis was that the random forest model, being non-linear, would outperform logistic regression.
       However, it underperformed slightly.
     - Possible reasons include:
         - Small dataset size limiting tree diversity
         - Model overfitting or default hyperparameters
+
+## Random Forest (Tuned via GridSearchCV)
+    - Best Parameters:
+        {max_depth: 5,
+        mas_features: sqrt,
+        min_samples_leaf: 2,
+        min_samples_split: 5,
+        n_estimators: 200
+        }
+    - Cross-Validation Accuracy: ~83%
+    - Test Set Accuracy: ~82.7%
+    - F1 Score for Survivors: ~0.78
+    - Clear performance improvement after hyperparameter tuning, especially in balancing precision and recall
+    - Strong generalization with reduced overfitting, thanks to parameter constraints (max_depth, min_sample_leaf, etc)
 
 ## Data Source and Preproccessing
 
