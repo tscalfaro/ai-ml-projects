@@ -1,13 +1,9 @@
 import requests
 import speech_recognition as sr
-import pyttsx3
+from tts_engine import speak
 
 
-def speak(text):
-    engine = pyttsx3.init()
-    engine.say("This is a test")
-    engine.say(text) 
-    engine.runAndWait()
+
 
 def listen():
     r = sr.Recognizer()
@@ -28,7 +24,7 @@ def listen():
 def ask_ollama(prompt):
     import requests
     import json
-    import pyttsx3
+    
 
     response = requests.post(
         'http://localhost:11434/api/generate',
@@ -36,8 +32,8 @@ def ask_ollama(prompt):
         stream=True
     )
 
-    engine = pyttsx3.init()
     full_response = ""
+    print("\nAssistant:", end="")
 
     for line in response.iter_lines():
         if line:
@@ -50,8 +46,7 @@ def ask_ollama(prompt):
                 print(f"\n[Error parsing line] {line}\n")
     
     print("\n\nSpeaking response...\n")
-    engine.say(full_response)
-    engine.runAndWait()
+    speak(full_response)
 
 def start_assistant():
     while True:
@@ -61,9 +56,7 @@ def start_assistant():
             termination_phrases = ["goodbye", "stop", "exit", "shutdown", "shut down", "quit"]
             if any(phrase in query.lower() for phrase in termination_phrases):
                 print("Shutting down assistant...")
-                engine = pyttsx3.init()
-                engine.say("Goodbye!")
-                engine.runAndWait()
+                speak("Goodbye!")
                 break  # Exit the loop
 
             ask_ollama(query)

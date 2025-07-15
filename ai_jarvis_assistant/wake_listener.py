@@ -1,5 +1,5 @@
 import pvporcupine
-import pyaudio
+import pyaudiowpatch as pyaudio
 import struct
 import os
 from dotenv import load_dotenv
@@ -35,7 +35,7 @@ def main():
             if result >= 0:
                 print("Wake word detected!")
                 start_assistant()
-                print("Returned to wak word listening...")
+                print("Returned to wake word listening...")
 
     except KeyboardInterrupt:
         print("Stopping...")
