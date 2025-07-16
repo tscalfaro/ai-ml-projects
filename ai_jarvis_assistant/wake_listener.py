@@ -3,12 +3,13 @@ import pyaudiowpatch as pyaudio
 import struct
 import os
 from dotenv import load_dotenv
-from assistant import start_assistant
+import asyncio
 
 load_dotenv()
 access_key = os.getenv("PORCUPINE_ACCESS_KEY")
 
-def main():
+async def wake_listener():
+    from assistant import start_assistant, exit_event
 
     if not access_key:
         raise ValueError("Access key not found in .env file!")
@@ -27,14 +28,14 @@ def main():
     print("Listening for wake word...")
 
     try:
-        while True:
+        while not exit_event.is_set():
             pcm = stream.read(porcupine.frame_length, exception_on_overflow=False)
             pcm = struct.unpack_from("h" * porcupine.frame_length, pcm)
 
             result = porcupine.process(pcm)
             if result >= 0:
                 print("Wake word detected!")
-                start_assistant()
+                await start_assistant()
                 print("Returned to wake word listening...")
 
     except KeyboardInterrupt:
@@ -45,6 +46,15 @@ def main():
         stream.close()
         pa.terminate()
         porcupine.delete()
+        exit_event.set()
 
 if __name__ == "__main__":
-    main()
+    import assistant
+    try:
+        asyncio.run(wake_listener())
+    except KeyboardInterrupt:
+        print("\n[INFO] KeyboardInterrupt received. Shutting down gracefully...")
+    except asyncio.CancelledError:
+        print("\n[INFO] Asyncio task was cancelled.")
+    finally:
+        assistant.exit_event.set()
