@@ -1,11 +1,20 @@
 import asyncio
 import requests
 import speech_recognition as sr
+import os
+from command_map import COMMAND_MAP
 from tts_engine import speak
 exit_event = asyncio.Event()
 
 OLLAMA_URL = "http://localhost:11434/api/generate"
 TERMINATORS = {"goodbye", "stop", "exit", "shutdown", "shut down", "quit"}
+
+def process_command(command: str) -> str:
+    command = command.lower().strip()
+    for trigger, action in COMMAND_MAP:
+        if trigger in command:
+            return action()
+    return "Sorry, I did not understand that command."
 
 async def listen():
     def blocking_listen():
@@ -65,7 +74,13 @@ async def start_assistant():
             exit_event.set()
             break
 
-        await ask_ollama(query)
+        # Handle local commands before calling ollama
+        response = process_command(query)
+        if "did not understand" not in response.lower():
+            print(f"\nJarvis: {response}")
+            await speak(response)
+        else:
+            await ask_ollama(query)
 
 if __name__ == "__main__":
     try:
