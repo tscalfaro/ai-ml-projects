@@ -2,18 +2,27 @@ import asyncio
 import requests
 import speech_recognition as sr
 import os
+from rapidfuzz import fuzz, process as fuzzy_process
 from command_map import COMMAND_MAP
 from tts_engine import speak
 exit_event = asyncio.Event()
 
+FUZZY_THRESHOLD = 75
 OLLAMA_URL = "http://localhost:11434/api/generate"
 TERMINATORS = {"goodbye", "stop", "exit", "shutdown", "shut down", "quit"}
 
 def process_command(command: str) -> str:
     command = command.lower().strip()
-    for trigger, action in COMMAND_MAP:
-        if trigger in command:
-            return action()
+    
+    #Extract triggers from map
+    triggers = [trigger for trigger, _ in COMMAND_MAP]
+
+    #Find the best fuzzy match
+    match, score, idx = fuzzy_process.extractOne(command, triggers, scorer=fuzz.partial_ratio)
+
+    if score >= FUZZY_THRESHOLD:
+        action = COMMAND_MAP[idx][1]
+        return action()
     return "Sorry, I did not understand that command."
 
 async def listen():

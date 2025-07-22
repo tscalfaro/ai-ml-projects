@@ -43,15 +43,15 @@ Build local/offline desktop AI assistant inspired by Jarvis, focused on voice in
 ---
 
 ## Recent Updates
+-   Fuzzy matching via `rapidfuzz` for more flexible command recognition
 -   `process_command()` now called before LLM fallback
 -   Command routing via `COMMAND_MAP` for maintainability
--   Dual-drive app launching (C: and D:)
 
 ---
 
 ## Next Steps
--   Enhance flexibility in command parsing (fuzzy matching or NLP)
 -   Add task management and contextual memory
 -   Consider voice-activated loggin or session summaries
+-   Enhance flexibility in command parsing (NLP instead of fuzzy matching potentially)
 
 ---
