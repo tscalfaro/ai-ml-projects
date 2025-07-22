@@ -21,6 +21,10 @@ Build local/offline desktop AI assistant inspired by Jarvis, focused on voice in
 | "ip address"     | Returns local IP |
 | "open downloads" | Opens Downloads folder |
 | "launch chrome"  | Tries launching Chrome (C: and D: drives checked) |
+| "remember that"  | handle_remember() user-fact |
+| "what's "        | handle_recall() user-fact |
+| "what is"        | handle_recall() user-fact |
+| "forget"         | handle_forget() user-fact |
 
 ## Key Features
 -   **Voice Acitvated** with wake word detection (Jarvis)
