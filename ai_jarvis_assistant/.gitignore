@@ -4,6 +4,10 @@ venv/
 # Environment variables
 .env
 
+#Memory/Tasks
+memory.json
+tasks.json
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

@@ -7,7 +7,7 @@ from command_map import COMMAND_MAP
 from tts_engine import speak
 exit_event = asyncio.Event()
 
-FUZZY_THRESHOLD = 75
+FUZZY_THRESHOLD = 80
 OLLAMA_URL = "http://localhost:11434/api/generate"
 TERMINATORS = {"goodbye", "stop", "exit", "shutdown", "shut down", "quit"}
 
@@ -21,8 +21,12 @@ def process_command(command: str) -> str:
     match, score, idx = fuzzy_process.extractOne(command, triggers, scorer=fuzz.partial_ratio)
 
     if score >= FUZZY_THRESHOLD:
-        action = COMMAND_MAP[idx][1]
-        return action()
+        trigger, action = COMMAND_MAP[idx]
+        try:
+            return action(command)
+        except TypeError:
+            return action()
+    
     return "Sorry, I did not understand that command."
 
 async def listen():

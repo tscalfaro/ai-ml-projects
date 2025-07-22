@@ -28,6 +28,7 @@ Build local/offline desktop AI assistant inspired by Jarvis, focused on voice in
 -   Mic **automatically pauses durring TTS** and reliably **reopens after completion**
 -   **Spoken and printed responses** handled in parallel
 -   **Modular architecture** for easy future expansion (i.e scheduling, memory)
+-   **Stores and retrieves** user-defined facts
 
 ---
 
@@ -39,18 +40,19 @@ Build local/offline desktop AI assistant inspired by Jarvis, focused on voice in
 -   `tts_engine.py`: Manages XTTS model and voice output
 -   `command_map.py`: Maps keywords to functions for easy extensibility
 -   `basic_commands.py`: Local system commands (time, IP, launch apps)
+-   `memory.py`: Stores, recalls, and forgets user-defined facts using simple natural language
 
 ---
 
 ## Recent Updates
+-   Added basic memory using user-defined facts
 -   Fuzzy matching via `rapidfuzz` for more flexible command recognition
 -   `process_command()` now called before LLM fallback
--   Command routing via `COMMAND_MAP` for maintainability
 
 ---
 
 ## Next Steps
--   Add task management and contextual memory
+-   Add task management
 -   Consider voice-activated loggin or session summaries
 -   Enhance flexibility in command parsing (NLP instead of fuzzy matching potentially)
 
